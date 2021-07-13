@@ -1,11 +1,12 @@
 <template>
     <div>
         <AddTodos />
+        <FilterTodos />
         <h3>todos llist</h3>
         <div class="todos">
           <div v-for="todo in getAllTodos" :key="todo.id" class="todo">
              <div>{{todo.title}}</div>
-             <div class="delete-box">x</div>
+             <div class="delete-box" @click="deleteTodo(todo.id)">x</div>
           </div>
         </div>
     </div>
@@ -14,13 +15,16 @@
 <script>
 import {mapGetters,mapActions} from 'vuex'
 import AddTodos from './AddTodos.vue'
+import FilterTodos from './filterTodos.vue'
     export default {
         name:'todos',
         components:{
-            AddTodos
+            AddTodos,
+            FilterTodos
+
         },
         methods:{
-            ...mapActions(['fetchTodos'])
+            ...mapActions(['fetchTodos','deleteTodo'])
         },
         computed: {
             ...mapGetters(['getAllTodos'])
@@ -45,8 +49,10 @@ import AddTodos from './AddTodos.vue'
     width: 100px;
     height: 40px;
     margin: 15px;
+    display: flex;
 }
 .delete-box{
-    color:black
+    color:black;
+    border:solid
 }
 </style>
